@@ -1,0 +1,7 @@
+# -*- shell-script -*-
+# $Id: user-settings.sample,v 1.17 2001/02/05 13:31:49 wenzelm Exp $
+#
+# Isabelle user settings sample -- may be copied to ~/isabelle/etc/settings
+
+ISABELLE_USEDIR_OPTIONS="-i true -d pdf"
+ISABELLE_LOGIC=HOL

@@ -1,0 +1,668 @@
+#
+# $Id: IsaMakefile,v 1.308 2002/03/06 16:56:04 wenzelm Exp $
+#
+# IsaMakefile for HOL
+#
+
+## targets
+
+default: HOL
+images: HOL HOL-Real HOL-Hyperreal TLA
+
+#Note: keep targets sorted (except for HOL-Library)
+test: \
+  HOL-Library \
+  HOL-Algebra \
+  HOL-Auth \
+  HOL-AxClasses \
+  HOL-Bali \
+  HOL-CTL \
+  HOL-GroupTheory \
+      HOL-Real-HahnBanach \
+      HOL-Real-ex \
+  HOL-Hoare \
+  HOL-HoareParallel \
+  HOL-Hyperreal-ex \
+  HOL-IMP \
+  HOL-IMPP \
+  HOL-IOA \
+  HOL-Induct \
+  HOL-Isar_examples \
+  HOL-Lambda \
+  HOL-Lattice \
+  HOL-Lex \
+  HOL-MicroJava \
+  HOL-MiniML \
+  HOL-Modelcheck \
+  HOL-NanoJava \
+  HOL-NumberTheory \
+  HOL-Prolog \
+  HOL-Subst \
+      TLA-Buffer \
+      TLA-Inc \
+      TLA-Memory \
+  HOL-UNITY \
+  HOL-Unix \
+  HOL-W0 \
+  HOL-ex
+    # ^ this is the sort position
+
+all: test images
+
+
+## global settings
+
+SRC = $(ISABELLE_HOME)/src
+OUT = $(ISABELLE_OUTPUT)
+LOG = $(OUT)/log
+
+
+## HOL
+
+HOL: Pure $(OUT)/HOL
+
+Pure:
+	@cd $(SRC)/Pure; $(ISATOOL) make Pure
+
+$(OUT)/HOL: $(OUT)/Pure $(SRC)/Provers/quantifier1.ML \
+  $(SRC)/Provers/Arith/abel_cancel.ML \
+  $(SRC)/Provers/Arith/assoc_fold.ML \
+  $(SRC)/Provers/Arith/cancel_numerals.ML \
+  $(SRC)/Provers/Arith/cancel_sums.ML \
+  $(SRC)/Provers/Arith/combine_numerals.ML \
+  $(SRC)/Provers/Arith/cancel_numeral_factor.ML \
+  $(SRC)/Provers/Arith/extract_common_term.ML \
+  $(SRC)/Provers/Arith/fast_lin_arith.ML $(SRC)/Provers/blast.ML \
+  $(SRC)/Provers/clasimp.ML $(SRC)/Provers/classical.ML \
+  $(SRC)/Provers/hypsubst.ML $(SRC)/Provers/induct_method.ML \
+  $(SRC)/Provers/make_elim.ML $(SRC)/Provers/simplifier.ML \
+  $(SRC)/Provers/splitter.ML $(SRC)/TFL/dcterm.ML $(SRC)/TFL/post.ML \
+  $(SRC)/TFL/rules.ML $(SRC)/TFL/tfl.ML $(SRC)/TFL/thms.ML $(SRC)/TFL/thry.ML \
+  $(SRC)/TFL/usyntax.ML $(SRC)/TFL/utils.ML \
+  Datatype.thy Datatype_Universe.ML Datatype_Universe.thy Divides.ML \
+  Divides.thy Finite_Set.ML Finite_Set.thy Fun.ML Fun.thy Gfp.ML Gfp.thy \
+  Hilbert_Choice.thy Hilbert_Choice_lemmas.ML HOL.ML \
+  HOL.thy HOL_lemmas.ML Inductive.thy Integ/Bin.ML Integ/Bin.thy \
+  Integ/Equiv.ML Integ/Equiv.thy Integ/Int.ML Integ/Int.thy \
+  Integ/IntArith.ML Integ/IntArith.thy Integ/IntDef.ML Integ/IntDef.thy \
+  Integ/IntDiv.ML Integ/IntDiv.thy Integ/IntPower.ML Integ/IntPower.thy \
+  Integ/nat_bin.ML Integ/NatBin.thy Integ/NatSimprocs.ML \
+  Integ/NatSimprocs.thy Integ/int_arith1.ML Integ/int_arith2.ML \
+  Integ/int_factor_simprocs.ML Integ/nat_simprocs.ML \
+  Lfp.ML Lfp.thy List.ML List.thy Main.ML Main.thy Map.ML Map.thy Nat.ML \
+  Nat.thy NatArith.ML NatArith.thy NatDef.ML NatDef.thy Numeral.thy \
+  Power.ML Power.thy PreList.thy Product_Type.ML Product_Type.thy ROOT.ML \
+  Recdef.thy Record.thy Relation.ML Relation.thy Relation_Power.ML \
+  Relation_Power.thy Set.ML Set.thy SetInterval.ML SetInterval.thy \
+  Sum_Type.ML Sum_Type.thy Tools/datatype_abs_proofs.ML Tools/datatype_aux.ML \
+  Tools/datatype_codegen.ML Tools/datatype_package.ML Tools/datatype_prop.ML \
+  Tools/datatype_rep_proofs.ML \
+  Tools/inductive_package.ML Tools/inductive_codegen.ML Tools/meson.ML Tools/numeral_syntax.ML \
+  Tools/primrec_package.ML Tools/recdef_package.ML Tools/recfun_codegen.ML \
+  Tools/record_package.ML Tools/split_rule.ML Tools/typedef_package.ML \
+  Transitive_Closure.thy Transitive_Closure.ML Typedef.thy \
+  Wellfounded_Recursion.ML Wellfounded_Recursion.thy Wellfounded_Relations.ML \
+  Wellfounded_Relations.thy arith_data.ML blastdata.ML cladata.ML \
+  document/root.tex hologic.ML meson_lemmas.ML simpdata.ML thy_syntax.ML
+	@$(ISATOOL) usedir -b -g true $(OUT)/Pure HOL
+
+
+## HOL-Real
+
+HOL-Real: HOL $(OUT)/HOL-Real
+
+$(OUT)/HOL-Real: $(OUT)/HOL Real/Complex_Numbers.thy \
+  Real/Lubs.ML Real/Lubs.thy Real/PNat.ML Real/PNat.thy \
+  Real/PRat.ML Real/PRat.thy \
+  Real/PReal.ML Real/PReal.thy Real/RComplete.ML Real/RComplete.thy \
+  Real/ROOT.ML Real/Real.thy Real/RealAbs.ML Real/RealAbs.thy \
+  Real/RealArith0.ML Real/RealArith0.thy Real/real_arith0.ML \
+  Real/RealArith.thy Real/real_arith.ML Real/RealBin.ML \
+  Real/RealBin.thy Real/RealDef.ML Real/RealDef.thy Real/RealInt.ML \
+  Real/RealInt.thy Real/RealOrd.ML Real/RealOrd.thy Real/RealPow.ML \
+  Real/RealPow.thy Real/document/root.tex Real/real_arith.ML
+	@cd Real; $(ISATOOL) usedir -b $(OUT)/HOL HOL-Real
+
+
+## HOL-Real-ex
+
+HOL-Real-ex: HOL-Real $(LOG)/HOL-Real-ex.gz
+
+$(LOG)/HOL-Real-ex.gz: $(OUT)/HOL-Real Real/ex/ROOT.ML \
+  Real/ex/BinEx.thy Real/ex/document/root.tex
+	@cd Real; $(ISATOOL) usedir $(OUT)/HOL-Real ex
+
+
+## HOL-Real-HahnBanach
+
+HOL-Real-HahnBanach: HOL-Real $(LOG)/HOL-Real-HahnBanach.gz
+
+$(LOG)/HOL-Real-HahnBanach.gz: $(OUT)/HOL-Real Real/HahnBanach/Aux.thy \
+  Real/HahnBanach/Bounds.thy Real/HahnBanach/FunctionNorm.thy \
+  Real/HahnBanach/FunctionOrder.thy Real/HahnBanach/HahnBanach.thy \
+  Real/HahnBanach/HahnBanachExtLemmas.thy	\
+  Real/HahnBanach/HahnBanachSupLemmas.thy	\
+  Real/HahnBanach/Linearform.thy Real/HahnBanach/NormedSpace.thy \
+  Real/HahnBanach/README.html Real/HahnBanach/ROOT.ML \
+  Real/HahnBanach/Subspace.thy Real/HahnBanach/VectorSpace.thy \
+  Real/HahnBanach/ZornLemma.thy Real/HahnBanach/document/root.bib \
+  Real/HahnBanach/document/root.tex
+	@cd Real; $(ISATOOL) usedir -g true $(OUT)/HOL-Real HahnBanach
+
+
+## HOL-Hyperreal
+
+HOL-Hyperreal: HOL-Real $(OUT)/HOL-Hyperreal
+
+$(OUT)/HOL-Hyperreal: $(OUT)/HOL-Real Hyperreal/ROOT.ML\
+  Hyperreal/EvenOdd.ML Hyperreal/EvenOdd.thy Hyperreal/ExtraThms2.ML\
+  Hyperreal/ExtraThms2.thy Hyperreal/Fact.ML Hyperreal/Fact.thy\
+  Hyperreal/Filter.ML Hyperreal/Filter.thy Hyperreal/HRealAbs.ML\
+  Hyperreal/HRealAbs.thy Hyperreal/HSeries.ML Hyperreal/HSeries.thy\
+  Hyperreal/HyperArith0.ML Hyperreal/HyperArith0.thy Hyperreal/HyperArith.thy\
+  Hyperreal/HyperBin.ML Hyperreal/HyperBin.thy Hyperreal/HyperDef.ML\
+  Hyperreal/HyperDef.thy Hyperreal/HyperNat.ML Hyperreal/HyperNat.thy\
+  Hyperreal/HyperOrd.ML Hyperreal/HyperOrd.thy Hyperreal/HyperPow.ML\
+  Hyperreal/HyperPow.thy Hyperreal/Hyperreal.thy\
+  Hyperreal/Lim.ML Hyperreal/Lim.thy  Hyperreal/Log.ML Hyperreal/Log.thy\
+  Hyperreal/MacLaurin.ML Hyperreal/MacLaurin.thy\
+  Hyperreal/NatStar.ML Hyperreal/NatStar.thy\
+  Hyperreal/NSA.ML Hyperreal/NSA.thy\
+  Hyperreal/NthRoot.ML Hyperreal/NthRoot.thy\
+  Hyperreal/Poly.ML Hyperreal/Poly.thy\
+  Hyperreal/SEQ.ML Hyperreal/SEQ.thy Hyperreal/Series.ML Hyperreal/Series.thy\
+  Hyperreal/Star.ML Hyperreal/Star.thy Hyperreal/Transcendental.ML\
+  Hyperreal/Transcendental.thy Hyperreal/Zorn.ML Hyperreal/Zorn.thy\
+  Hyperreal/fuf.ML Hyperreal/hypreal_arith.ML \
+  Hyperreal/hypreal_arith0.ML
+	@cd Hyperreal; $(ISATOOL) usedir -b $(OUT)/HOL-Real HOL-Hyperreal
+
+
+## HOL-Hyperreal-ex
+
+HOL-Hyperreal-ex: HOL-Hyperreal $(LOG)/HOL-Hyperreal-ex.gz
+
+$(LOG)/HOL-Hyperreal-ex.gz: $(OUT)/HOL-Hyperreal Library/Primes.thy \
+  Hyperreal/ex/ROOT.ML Hyperreal/ex/document/root.tex \
+  Hyperreal/ex/Sqrt.thy Hyperreal/ex/Sqrt_Script.thy
+	@cd Hyperreal; $(ISATOOL) usedir $(OUT)/HOL-Hyperreal ex
+
+
+## HOL-Library
+
+HOL-Library: HOL $(LOG)/HOL-Library.gz
+
+$(LOG)/HOL-Library.gz: $(OUT)/HOL Library/Accessible_Part.thy \
+  Library/Library.thy Library/List_Prefix.thy Library/Multiset.thy \
+  Library/Permutation.thy Library/Primes.thy \
+  Library/Quotient.thy Library/Ring_and_Field.thy \
+  Library/Ring_and_Field_Example.thy Library/Nat_Infinity.thy \
+  Library/README.html Library/Continuity.thy \
+  Library/Nested_Environment.thy Library/Rational_Numbers.thy \
+  Library/Library/ROOT.ML Library/Library/document/root.tex \
+  Library/Library/document/root.bib Library/While_Combinator.thy
+	@cd Library; $(ISATOOL) usedir $(OUT)/HOL Library
+
+
+## HOL-Subst
+
+HOL-Subst: HOL $(LOG)/HOL-Subst.gz
+
+$(LOG)/HOL-Subst.gz: $(OUT)/HOL Subst/AList.ML Subst/AList.thy \
+  Subst/ROOT.ML Subst/Subst.ML Subst/Subst.thy Subst/UTerm.ML \
+  Subst/UTerm.thy Subst/Unifier.ML Subst/Unifier.thy Subst/Unify.ML \
+  Subst/Unify.thy
+	@$(ISATOOL) usedir $(OUT)/HOL Subst
+
+
+## HOL-Induct
+
+HOL-Induct: HOL $(LOG)/HOL-Induct.gz
+
+$(LOG)/HOL-Induct.gz: $(OUT)/HOL \
+  Induct/Com.ML Induct/Com.thy Induct/Comb.ML Induct/Comb.thy \
+  Induct/Exp.ML Induct/Exp.thy Induct/LFilter.ML Induct/LFilter.thy \
+  Induct/LList.ML Induct/LList.thy Induct/Mutil.thy Induct/Ordinals.thy \
+  Induct/PropLog.ML Induct/PropLog.thy Induct/ROOT.ML \
+  Induct/Sexp.ML Induct/Sexp.thy Induct/Sigma_Algebra.thy \
+  Induct/SList.ML Induct/SList.thy Induct/ABexp.thy Induct/Term.thy \
+  Induct/Tree.thy Induct/document/root.tex
+	@$(ISATOOL) usedir $(OUT)/HOL Induct
+
+
+## HOL-IMP
+
+HOL-IMP: HOL $(LOG)/HOL-IMP.gz
+
+$(LOG)/HOL-IMP.gz: $(OUT)/HOL IMP/Com.thy IMP/Compiler.thy \
+  IMP/Denotation.thy IMP/Expr.thy IMP/Hoare.thy \
+  IMP/Natural.thy IMP/Examples.thy \
+  IMP/Transition.thy IMP/VC.thy IMP/ROOT.ML IMP/document/root.tex \
+  IMP/document/root.bib
+	@$(ISATOOL) usedir -g true $(OUT)/HOL IMP
+
+
+## HOL-IMPP
+
+HOL-IMPP: HOL $(LOG)/HOL-IMPP.gz
+
+$(LOG)/HOL-IMPP.gz: $(OUT)/HOL IMPP/ROOT.ML IMPP/Com.thy IMPP/Com.ML \
+  IMPP/Natural.thy IMPP/Natural.ML IMPP/Hoare.thy IMPP/Hoare.ML \
+  IMPP/Misc.thy IMPP/Misc.ML IMPP/EvenOdd.thy IMPP/EvenOdd.ML
+	@$(ISATOOL) usedir $(OUT)/HOL IMPP
+
+
+## HOL-NumberTheory
+
+HOL-NumberTheory: HOL $(LOG)/HOL-NumberTheory.gz
+
+$(LOG)/HOL-NumberTheory.gz: $(OUT)/HOL \
+  Library/Permutation.thy Library/Primes.thy NumberTheory/Fib.thy \
+  NumberTheory/Factorization.thy NumberTheory/BijectionRel.thy \
+  NumberTheory/Chinese.thy NumberTheory/EulerFermat.thy \
+  NumberTheory/IntFact.thy NumberTheory/IntPrimes.thy \
+  NumberTheory/WilsonBij.thy NumberTheory/WilsonRuss.thy \
+  NumberTheory/ROOT.ML
+	@$(ISATOOL) usedir -g true $(OUT)/HOL NumberTheory
+
+
+## HOL-GroupTheory
+
+HOL-GroupTheory: HOL $(LOG)/HOL-GroupTheory.gz
+
+$(LOG)/HOL-GroupTheory.gz: $(OUT)/HOL \
+  Library/Primes.thy \
+  GroupTheory/Bij.thy GroupTheory/Bij.ML\
+  GroupTheory/Coset.thy GroupTheory/Coset.ML\
+  GroupTheory/DirProd.thy GroupTheory/DirProd.ML\
+  GroupTheory/Exponent.thy GroupTheory/Exponent.ML\
+  GroupTheory/FactGroup.thy GroupTheory/FactGroup.ML\
+  GroupTheory/Group.thy GroupTheory/Group.ML\
+  GroupTheory/Homomorphism.thy GroupTheory/Homomorphism.ML\
+  GroupTheory/PiSets.ML GroupTheory/PiSets.thy \
+  GroupTheory/Ring.thy GroupTheory/Ring.ML\
+  GroupTheory/RingConstr.thy GroupTheory/RingConstr.ML\
+  GroupTheory/Sylow.thy GroupTheory/Sylow.ML\
+  GroupTheory/ROOT.ML
+	@$(ISATOOL) usedir $(OUT)/HOL GroupTheory
+
+
+## HOL-Hoare
+
+HOL-Hoare: HOL $(LOG)/HOL-Hoare.gz
+
+$(LOG)/HOL-Hoare.gz: $(OUT)/HOL Hoare/Arith2.ML Hoare/Arith2.thy \
+  Hoare/Examples.ML Hoare/Examples.thy Hoare/Hoare.ML Hoare/Hoare.thy \
+  Hoare/ROOT.ML
+	@$(ISATOOL) usedir $(OUT)/HOL Hoare
+
+
+## HOL-HoareParallel
+
+HOL-HoareParallel: HOL $(LOG)/HOL-HoareParallel.gz
+
+$(LOG)/HOL-HoareParallel.gz: $(OUT)/HOL HoareParallel/Gar_Coll.thy \
+  HoareParallel/Graph.thy HoareParallel/Mul_Gar_Coll.thy	   \
+  HoareParallel/OG_Com.thy HoareParallel/OG_Examples.thy	   \
+  HoareParallel/OG_Hoare.thy HoareParallel/OG_Syntax.thy	   \
+  HoareParallel/OG_Tactics.thy HoareParallel/OG_Tran.thy	   \
+  HoareParallel/Quote_Antiquote.thy                                \
+  HoareParallel/RG_Com.thy HoareParallel/RG_Examples.thy	   \
+  HoareParallel/RG_Hoare.thy HoareParallel/RG_Syntax.thy	   \
+  HoareParallel/RG_Tran.thy HoareParallel/ROOT.ML		   \
+  HoareParallel/document/root.tex
+	@$(ISATOOL) usedir -g true $(OUT)/HOL HoareParallel
+
+
+## HOL-Lex
+
+HOL-Lex: HOL $(LOG)/HOL-Lex.gz
+
+$(LOG)/HOL-Lex.gz: $(OUT)/HOL \
+  Lex/AutoChopper.thy Lex/AutoChopper.ML Lex/AutoChopper1.thy \
+  Lex/AutoMaxChop.thy Lex/AutoMaxChop.ML Lex/AutoProj.thy Lex/AutoProj.ML \
+  Lex/Automata.thy Lex/Automata.ML Lex/Chopper.thy Lex/DA.thy Lex/DA.ML \
+  Lex/MaxChop.thy Lex/MaxChop.ML Lex/MaxPrefix.thy Lex/MaxPrefix.ML \
+  Lex/NA.thy Lex/NA.ML Lex/NAe.thy Lex/NAe.ML Lex/RegExp2NAe.thy \
+  Lex/Scanner.thy Lex/RegExp2NAe.ML Lex/RegExp2NA.thy Lex/RegExp2NA.ML \
+  Lex/ROOT.ML Lex/RegExp.thy Lex/RegSet.thy Lex/RegSet.ML \
+  Lex/RegSet_of_nat_DA.thy Lex/RegSet_of_nat_DA.ML Library/List_Prefix.thy
+	@$(ISATOOL) usedir $(OUT)/HOL Lex
+
+
+## HOL-Algebra
+
+HOL-Algebra: HOL $(LOG)/HOL-Algebra.gz
+
+$(LOG)/HOL-Algebra.gz: $(OUT)/HOL Algebra/ROOT.ML \
+  Algebra/abstract/Abstract.thy \
+  Algebra/abstract/Factor.ML Algebra/abstract/Factor.thy \
+  Algebra/abstract/Field.thy \
+  Algebra/abstract/Ideal.ML Algebra/abstract/Ideal.thy \
+  Algebra/abstract/NatSum.ML Algebra/abstract/NatSum.thy \
+  Algebra/abstract/PID.thy \
+  Algebra/abstract/Ring.ML Algebra/abstract/Ring.thy \
+  Algebra/abstract/RingHomo.ML Algebra/abstract/RingHomo.thy\
+  Algebra/poly/Degree.ML Algebra/poly/Degree.thy \
+  Algebra/poly/LongDiv.ML Algebra/poly/LongDiv.thy \
+  Algebra/poly/PolyHomo.ML Algebra/poly/PolyHomo.thy \
+  Algebra/poly/PolyRing.ML Algebra/poly/PolyRing.thy \
+  Algebra/poly/Polynomial.thy \
+  Algebra/poly/ProtoPoly.ML Algebra/poly/ProtoPoly.thy \
+  Algebra/poly/UnivPoly.ML Algebra/poly/UnivPoly.thy
+	@$(ISATOOL) usedir $(OUT)/HOL Algebra
+
+## HOL-Auth
+
+HOL-Auth: HOL $(LOG)/HOL-Auth.gz
+
+$(LOG)/HOL-Auth.gz: $(OUT)/HOL Auth/Event_lemmas.ML Auth/Event.thy \
+  Auth/Message_lemmas.ML Auth/Message.thy Auth/NS_Public.thy \
+  Auth/NS_Public_Bad.thy \
+  Auth/NS_Shared.thy Auth/OtwayRees.thy Auth/OtwayRees_AN.thy \
+  Auth/OtwayRees_Bad.thy Auth/Public_lemmas.ML Auth/Public.thy Auth/ROOT.ML \
+  Auth/Recur.thy Auth/Shared_lemmas.ML Auth/Shared.thy \
+  Auth/TLS.thy Auth/WooLam.thy \
+  Auth/Kerberos_BAN.ML Auth/Kerberos_BAN.thy \
+  Auth/KerberosIV.ML Auth/KerberosIV.thy \
+  Auth/Yahalom.thy Auth/Yahalom2.thy Auth/Yahalom_Bad.thy
+	@$(ISATOOL) usedir $(OUT)/HOL Auth
+
+
+## HOL-UNITY
+
+HOL-UNITY: HOL $(LOG)/HOL-UNITY.gz
+
+$(LOG)/HOL-UNITY.gz: $(OUT)/HOL Library/Multiset.thy UNITY/ROOT.ML \
+  UNITY/Comp.ML UNITY/Comp.thy \
+  UNITY/Detects.ML UNITY/Detects.thy \
+  UNITY/ELT.ML UNITY/ELT.thy UNITY/Extend.ML \
+  UNITY/Extend.thy UNITY/FP.ML UNITY/FP.thy UNITY/Follows.ML \
+  UNITY/Follows.thy UNITY/GenPrefix.ML UNITY/GenPrefix.thy \
+  UNITY/Guar.ML UNITY/Guar.thy  \
+  UNITY/Lift_prog.ML UNITY/Lift_prog.thy \
+  UNITY/ListOrder.thy  \
+  UNITY/PPROD.ML UNITY/PPROD.thy \
+  UNITY/Project.ML UNITY/Project.thy \
+  UNITY/Rename.ML UNITY/Rename.thy \
+  UNITY/SubstAx.ML UNITY/SubstAx.thy UNITY/UNITY.ML \
+  UNITY/UNITY.thy UNITY/Union.ML UNITY/Union.thy UNITY/WFair.ML \
+  UNITY/WFair.thy \
+  UNITY/Simple/Channel.ML UNITY/Simple/Channel.thy  \
+  UNITY/Simple/Common.ML UNITY/Simple/Common.thy  \
+  UNITY/Simple/Deadlock.ML UNITY/Simple/Deadlock.thy  \
+  UNITY/Simple/Lift.ML UNITY/Simple/Lift.thy  \
+  UNITY/Simple/Mutex.ML UNITY/Simple/Mutex.thy  \
+  UNITY/Simple/NSP_Bad.ML UNITY/Simple/NSP_Bad.thy  \
+  UNITY/Simple/Network.ML UNITY/Simple/Network.thy  \
+  UNITY/Simple/Reach.ML UNITY/Simple/Reach.thy   \
+  UNITY/Simple/Reachability.ML UNITY/Simple/Reachability.thy   \
+  UNITY/Simple/Token.ML UNITY/Simple/Token.thy \
+  UNITY/Comp/Alloc.ML UNITY/Comp/Alloc.thy \
+  UNITY/Comp/AllocBase.ML UNITY/Comp/AllocBase.thy \
+  UNITY/Comp/Client.ML UNITY/Comp/Client.thy \
+  UNITY/Comp/Counter.ML UNITY/Comp/Counter.thy \
+  UNITY/Comp/Counterc.ML UNITY/Comp/Counterc.thy \
+  UNITY/Comp/Handshake.ML UNITY/Comp/Handshake.thy \
+  UNITY/Comp/PriorityAux.ML UNITY/Comp/PriorityAux.thy \
+  UNITY/Comp/Priority.ML UNITY/Comp/Priority.thy \
+  UNITY/Comp/TimerArray.ML UNITY/Comp/TimerArray.thy
+	@$(ISATOOL) usedir $(OUT)/HOL UNITY
+
+
+## HOL-Unix
+
+HOL-Unix: HOL $(LOG)/HOL-Unix.gz
+
+$(LOG)/HOL-Unix.gz: $(OUT)/HOL Library/Nested_Environment.thy \
+  Library/List_Prefix.thy Unix/ROOT.ML Unix/Unix.thy \
+  Unix/document/root.bib Unix/document/root.tex
+	@$(ISATOOL) usedir $(OUT)/HOL Unix
+
+
+## HOL-Modelcheck
+
+HOL-Modelcheck: HOL $(LOG)/HOL-Modelcheck.gz
+
+$(LOG)/HOL-Modelcheck.gz: $(OUT)/HOL Modelcheck/CTL.thy \
+  Modelcheck/EindhovenExample.ML Modelcheck/EindhovenExample.thy \
+  Modelcheck/EindhovenSyn.ML Modelcheck/EindhovenSyn.thy \
+  Modelcheck/MuCalculus.ML Modelcheck/MuCalculus.thy \
+  Modelcheck/MuckeExample1.ML Modelcheck/MuckeExample1.thy \
+  Modelcheck/MuckeExample2.ML Modelcheck/MuckeExample2.thy \
+  Modelcheck/MuckeSyn.ML Modelcheck/MuckeSyn.thy Modelcheck/ROOT.ML \
+  Modelcheck/mucke_oracle.ML
+	@$(ISATOOL) usedir $(OUT)/HOL Modelcheck
+
+
+## HOL-Lambda
+
+HOL-Lambda: HOL $(LOG)/HOL-Lambda.gz
+
+$(LOG)/HOL-Lambda.gz: $(OUT)/HOL Library/Accessible_Part.thy \
+  Lambda/Commutation.thy Lambda/Eta.thy Lambda/InductTermi.thy Lambda/Lambda.thy \
+  Lambda/ListApplication.thy Lambda/ListBeta.thy Lambda/ListOrder.thy \
+  Lambda/ParRed.thy Lambda/Type.thy Lambda/ROOT.ML Lambda/document/root.tex
+	@$(ISATOOL) usedir -g true $(OUT)/HOL Lambda
+
+
+## HOL-Prolog
+
+HOL-Prolog: HOL $(LOG)/HOL-Prolog.gz
+
+$(LOG)/HOL-Prolog.gz: $(OUT)/HOL Prolog/ROOT.ML Prolog/HOHH.ML Prolog/HOHH.thy \
+  Prolog/Test.ML Prolog/Test.thy  \
+  Prolog/Func.ML Prolog/Func.thy Prolog/Type.ML Prolog/Type.thy
+	@$(ISATOOL) usedir $(OUT)/HOL Prolog
+
+
+## HOL-W0
+
+HOL-W0: HOL $(LOG)/HOL-W0.gz
+
+$(LOG)/HOL-W0.gz: $(OUT)/HOL W0/ROOT.ML W0/W0.thy W0/document/root.tex
+	@$(ISATOOL) usedir $(OUT)/HOL W0
+
+
+## HOL-MiniML
+
+HOL-MiniML: HOL $(LOG)/HOL-MiniML.gz
+
+$(LOG)/HOL-MiniML.gz: $(OUT)/HOL MiniML/Generalize.ML \
+  MiniML/Generalize.thy MiniML/Instance.ML MiniML/Instance.thy \
+  MiniML/Maybe.ML MiniML/Maybe.thy MiniML/MiniML.ML MiniML/MiniML.thy \
+  MiniML/ROOT.ML MiniML/Type.ML MiniML/Type.thy MiniML/W.ML MiniML/W.thy
+	@$(ISATOOL) usedir $(OUT)/HOL MiniML
+
+
+## HOL-MicroJava
+
+HOL-MicroJava: HOL $(LOG)/HOL-MicroJava.gz
+
+$(LOG)/HOL-MicroJava.gz: $(OUT)/HOL MicroJava/ROOT.ML \
+  MicroJava/J/Conform.thy MicroJava/J/Eval.thy MicroJava/J/JBasis.thy \
+  MicroJava/J/JTypeSafe.thy MicroJava/J/Decl.thy MicroJava/J/State.thy \
+  MicroJava/J/Term.thy MicroJava/J/Type.thy MicroJava/J/TypeRel.thy \
+  MicroJava/J/WellForm.thy MicroJava/J/Value.thy \
+  MicroJava/J/WellType.thy MicroJava/J/Example.thy \
+  MicroJava/J/JListExample.thy \
+  MicroJava/JVM/JVMExec.thy MicroJava/JVM/JVMInstructions.thy\
+  MicroJava/JVM/JVMState.thy MicroJava/JVM/JVMExecInstr.thy\
+  MicroJava/JVM/JVMListExample.thy MicroJava/JVM/JVMExceptions.thy \
+  MicroJava/BV/BVSpec.thy MicroJava/BV/BVSpecTypeSafe.thy \
+  MicroJava/BV/Correct.thy MicroJava/BV/Err.thy MicroJava/BV/JType.thy \
+  MicroJava/BV/JVM.thy MicroJava/BV/JVMType.thy MicroJava/BV/Kildall.thy \
+  MicroJava/BV/LBVSpec.thy MicroJava/BV/Listn.thy MicroJava/BV/Opt.thy \
+  MicroJava/BV/Product.thy MicroJava/BV/Semilat.thy \
+  MicroJava/BV/Effect.thy MicroJava/BV/EffectMono.thy \
+  MicroJava/BV/Typing_Framework.thy MicroJava/BV/Typing_Framework_err.thy \
+  MicroJava/BV/Kildall_Lift.thy MicroJava/BV/BVExample.thy \
+  MicroJava/document/root.bib MicroJava/document/root.tex \
+  MicroJava/document/introduction.tex
+	@$(ISATOOL) usedir -g true $(OUT)/HOL MicroJava
+
+
+## HOL-NanoJava
+
+HOL-NanoJava: HOL $(LOG)/HOL-NanoJava.gz
+
+$(LOG)/HOL-NanoJava.gz: $(OUT)/HOL NanoJava/ROOT.ML \
+  NanoJava/Term.thy NanoJava/Decl.thy NanoJava/TypeRel.thy NanoJava/State.thy \
+  NanoJava/OpSem.thy NanoJava/AxSem.thy NanoJava/AxSem.thy \
+  NanoJava/document/root.bib NanoJava/document/root.tex
+	@$(ISATOOL) usedir -g true $(OUT)/HOL NanoJava
+
+
+## HOL-Bali
+
+HOL-Bali: HOL $(LOG)/HOL-Bali.gz
+
+$(LOG)/HOL-Bali.gz: $(OUT)/HOL Bali/AxCompl.thy Bali/AxExample.thy	\
+  Bali/AxSem.thy Bali/AxSound.thy Bali/Basis.thy Bali/Conform.thy	\
+  Bali/Decl.thy Bali/DeclConcepts.thy Bali/Eval.thy Bali/Evaln.thy	\
+  Bali/Example.thy Bali/Name.thy Bali/ROOT.ML Bali/State.thy		\
+  Bali/Table.thy Bali/Term.thy Bali/Trans.thy Bali/Type.thy		\
+  Bali/TypeRel.thy Bali/TypeSafe.thy Bali/Value.thy Bali/WellForm.thy	\
+  Bali/WellType.thy Bali/document/root.tex
+	@$(ISATOOL) usedir -g true $(OUT)/HOL Bali
+
+
+## HOL-CTL
+
+HOL-CTL: HOL $(LOG)/HOL-CTL.gz
+
+$(LOG)/HOL-CTL.gz: $(OUT)/HOL \
+  CTL/CTL.thy CTL/ROOT.ML CTL/document/root.tex CTL/document/root.bib
+	@$(ISATOOL) usedir $(OUT)/HOL CTL
+
+
+## HOL-IOA
+
+HOL-IOA: HOL $(LOG)/HOL-IOA.gz
+
+$(LOG)/HOL-IOA.gz: $(OUT)/HOL IOA/Asig.ML IOA/Asig.thy IOA/IOA.ML \
+  IOA/IOA.thy IOA/ROOT.ML IOA/Solve.ML IOA/Solve.thy
+	@$(ISATOOL) usedir $(OUT)/HOL IOA
+
+
+## HOL-AxClasses
+
+HOL-AxClasses: HOL $(LOG)/HOL-AxClasses.gz
+
+$(LOG)/HOL-AxClasses.gz: $(OUT)/HOL AxClasses/Group.thy \
+  AxClasses/Product.thy AxClasses/ROOT.ML AxClasses/Semigroups.thy
+	@$(ISATOOL) usedir $(OUT)/HOL AxClasses
+
+
+## HOL-Lattice
+
+HOL-Lattice: HOL $(LOG)/HOL-Lattice.gz
+
+$(LOG)/HOL-Lattice.gz: $(OUT)/HOL Lattice/Bounds.thy \
+  Lattice/CompleteLattice.thy Lattice/Lattice.thy Lattice/Orders.thy \
+  Lattice/ROOT.ML Lattice/document/root.tex
+	@$(ISATOOL) usedir $(OUT)/HOL Lattice
+
+
+## HOL-ex
+
+HOL-ex: HOL $(LOG)/HOL-ex.gz
+
+$(LOG)/HOL-ex.gz: $(OUT)/HOL ex/AVL.ML ex/AVL.thy ex/Antiquote.thy \
+  ex/BT.thy ex/BinEx.thy ex/Group.ML ex/Group.thy ex/Higher_Order_Logic.thy \
+  ex/Hilbert_Classical.thy ex/InSort.ML ex/InSort.thy ex/IntRing.ML \
+  ex/IntRing.thy ex/Intuitionistic.thy \
+  ex/Lagrange.ML ex/Lagrange.thy ex/Locales.thy \
+  ex/MT.ML ex/MT.thy ex/MonoidGroup.thy ex/Multiquote.thy \
+  ex/NatSum.thy ex/PER.thy ex/Primrec.thy ex/Puzzle.ML ex/Puzzle.thy \
+  ex/Qsort.ML ex/Qsort.thy ex/ROOT.ML ex/Recdefs.thy ex/Records.thy \
+  ex/Ring.ML ex/Ring.thy ex/StringEx.thy ex/SVC_Oracle.ML ex/SVC_Oracle.thy \
+  ex/Tarski.ML ex/Tarski.thy ex/Tuple.thy ex/cla.ML ex/mesontest.ML \
+  ex/mesontest2.ML ex/mesontest2.thy ex/set.ML ex/set.thy ex/svc_funcs.ML \
+  ex/svc_test.ML ex/svc_test.thy ex/document/root.bib ex/document/root.tex
+	@$(ISATOOL) usedir $(OUT)/HOL ex
+
+
+## HOL-Isar_examples
+
+HOL-Isar_examples: HOL $(LOG)/HOL-Isar_examples.gz
+
+$(LOG)/HOL-Isar_examples.gz: $(OUT)/HOL Isar_examples/BasicLogic.thy \
+  Isar_examples/Cantor.ML Isar_examples/Cantor.thy \
+  Isar_examples/ExprCompiler.thy Isar_examples/Fibonacci.thy \
+  Isar_examples/Group.thy Isar_examples/Hoare.thy Isar_examples/HoareEx.thy \
+  Isar_examples/KnasterTarski.thy Isar_examples/MutilatedCheckerboard.thy \
+  Isar_examples/NestedDatatype.thy Isar_examples/Peirce.thy \
+  Isar_examples/Puzzle.thy Isar_examples/Summation.thy \
+  Isar_examples/ROOT.ML Isar_examples/document/proof.sty \
+  Isar_examples/document/root.bib Isar_examples/document/root.tex \
+  Isar_examples/document/style.tex
+	@$(ISATOOL) usedir $(OUT)/HOL Isar_examples
+
+
+## TLA
+
+TLA: HOL $(OUT)/TLA
+
+$(OUT)/TLA: $(OUT)/HOL TLA/Action.ML TLA/Action.thy TLA/Init.ML \
+  TLA/Init.thy TLA/Intensional.ML TLA/Intensional.thy \
+  TLA/ROOT.ML TLA/Stfun.ML TLA/Stfun.thy TLA/TLA.ML TLA/TLA.thy
+	@cd TLA; $(ISATOOL) usedir -b $(OUT)/HOL TLA
+
+
+## TLA-Inc
+
+TLA-Inc: TLA $(LOG)/TLA-Inc.gz
+
+$(LOG)/TLA-Inc.gz: $(OUT)/TLA TLA/Inc/Inc.thy TLA/Inc/Inc.ML \
+  TLA/Inc/Pcount.thy
+	@cd TLA; $(ISATOOL) usedir $(OUT)/TLA Inc
+
+
+## TLA-Buffer
+
+TLA-Buffer: TLA $(LOG)/TLA-Buffer.gz
+
+$(LOG)/TLA-Buffer.gz: $(OUT)/TLA TLA/Buffer/Buffer.thy \
+  TLA/Buffer/Buffer.ML TLA/Buffer/DBuffer.thy TLA/Buffer/DBuffer.ML
+	@cd TLA; $(ISATOOL) usedir $(OUT)/TLA Buffer
+
+
+## TLA-Memory
+
+TLA-Memory: TLA $(LOG)/TLA-Memory.gz
+
+$(LOG)/TLA-Memory.gz: $(OUT)/TLA TLA/Memory/MIParameters.thy \
+  TLA/Memory/MIsafe.ML TLA/Memory/MemClerk.ML \
+  TLA/Memory/MemClerk.thy TLA/Memory/MemClerkParameters.ML \
+  TLA/Memory/MemClerkParameters.thy TLA/Memory/Memory.ML \
+  TLA/Memory/Memory.thy TLA/Memory/MemoryImplementation.ML \
+  TLA/Memory/MemoryImplementation.thy TLA/Memory/MemoryParameters.ML \
+  TLA/Memory/MemoryParameters.thy TLA/Memory/ProcedureInterface.ML \
+  TLA/Memory/ProcedureInterface.thy TLA/Memory/RPC.ML TLA/Memory/RPC.thy \
+  TLA/Memory/RPCMemoryParams.thy TLA/Memory/RPCParameters.ML \
+  TLA/Memory/RPCParameters.thy
+	@cd TLA; $(ISATOOL) usedir $(OUT)/TLA Memory
+
+
+## clean
+
+clean:
+	@rm -f  $(OUT)/HOL $(OUT)/HOL-Real $(OUT)/HOL-Hyperreal $(OUT)/TLA \
+		$(LOG)/HOL.gz $(LOG)/HOL-Real.gz $(LOG)/TLA.gz \
+		$(LOG)/HOL-Isar_examples.gz $(LOG)/HOL-Induct.gz \
+		$(LOG)/HOL-ex.gz $(LOG)/HOL-Subst.gz $(LOG)/HOL-IMP.gz \
+		$(LOG)/HOL-IMPP.gz $(LOG)/HOL-Hoare.gz \
+		$(LOG)/HOL-HoareParallel.gz \
+		$(LOG)/HOL-Lex.gz $(LOG)/HOL-Algebra.gz \
+		$(LOG)/HOL-Auth.gz $(LOG)/HOL-UNITY.gz \
+		$(LOG)/HOL-Modelcheck.gz $(LOG)/HOL-Lambda.gz \
+		$(LOG)/HOL-W0.gz $(LOG)/HOL-MiniML.gz \
+                $(LOG)/HOL-Bali.gz $(LOG)/HOL-CTL.gz \
+		$(LOG)/HOL-MicroJava.gz $(LOG)/HOL-NanoJava.gz \
+		$(LOG)/HOL-IOA.gz $(LOG)/HOL-AxClasses \
+		$(LOG)/HOL-Lattice $(LOG)/HOL-Real-ex.gz \
+		$(LOG)/HOL-Hyperreal-ex.gz \
+		$(LOG)/HOL-Real-HahnBanach.gz $(LOG)/TLA-Inc.gz \
+		$(LOG)/TLA-Buffer.gz $(LOG)/TLA-Memory.gz \
+		$(LOG)/HOL-Library.gz $(LOG)/HOL-Unix.gz 
